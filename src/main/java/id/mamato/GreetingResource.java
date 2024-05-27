@@ -1,5 +1,7 @@
 package id.mamato;
 
+import io.smallrye.common.annotation.NonBlocking;
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -21,6 +23,7 @@ public class GreetingResource {
     @Path("/hi")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @NonBlocking
     public String hello() {
         return "hi";
     }
@@ -28,14 +31,15 @@ public class GreetingResource {
     @Path("/send-money")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Receipt sendMoney(SendMoneyRequest request) {
-        return new Receipt(
+    public Uni<Receipt> sendMoney(SendMoneyRequest request) {
+        Receipt r =  new Receipt(
                 request.from().firstName() + request.from().lastName(),
                 request.to().firstName() + request.to().lastName(),
                 request.amount(),
                 new Date(),
                 request.to().address().street() + "," + request.to().address().city() + ", " + request.to().address().state() + ", " + request.to().address().zip()
         );
+        return Uni.createFrom().item(r);
     }
 }
 
