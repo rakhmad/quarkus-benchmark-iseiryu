@@ -35,7 +35,7 @@ hey -n 200000 -c 100 -m POST -H 'Content-Type: application/json' -d '{
 }' http://localhost:8080/send-money
 ```
 
-There are two versions of this API: synchronous and reactive. Running on my test machine (MBP 14 M1 Max 64GB RAM, macOS 14.5), the results are below:
+There are two versions of this API: synchronous and reactive. Running on my test machine (MBP 14 M1 Max, 64GB RAM, macOS 14.5), the results are below:
 - Synchronous
 
   
@@ -44,3 +44,17 @@ There are two versions of this API: synchronous and reactive. Running on my test
 
   
 ![photo_2024-05-28_06-59-34](https://github.com/rakhmad/quarkus-benchmark-iseiryu/assets/195559/17d1dcbb-34de-4494-bd58-41744ab25b58)
+
+I did another benchmark on my Linux Machine (Fedora 40, AMD Ryzen™ 9 5900X × 24, 128 GB RAM) with OpenJDK 21 and Quarkus native image. The results are below
+only for reactive API.
+
+- JVM Mode
+
+![JVM Mode](https://github.com/rakhmad/quarkus-benchmark-iseiryu/assets/195559/6c802412-c435-4d79-abfe-c85acc803a17)
+
+
+- Native Mode
+
+![Native Mode](https://github.com/rakhmad/quarkus-benchmark-iseiryu/assets/195559/d701fae1-0615-48d3-9fd0-cf1981cc0d21)
+
+Memory usage for reactive native mode is 100MB (using `htop`)
